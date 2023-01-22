@@ -1,0 +1,28 @@
+@startuml
+
+skinparam class {
+  BackgroundColor #ebebeb
+  ArrowColor      #333
+  BorderColor     #333
+}
+
+skinparam lineType ortho
+
+package psr.event {
+  interface EventDispatcherInterface {
+    + dispatch(event: object) -> object
+  }
+
+  interface ListenerProviderInterface {
+    + get_listeners_for_event(event: object) -> Iterable[Callable[[object], Any]]
+  }
+
+  interface StoppableEventInterface {
+    + is_propagation_stopped() -> bool
+  }
+
+  EventDispatcherInterface -- StoppableEventInterface : "Dispatches >"
+  ListenerProviderInterface -- EventDispatcherInterface  : "Provides for >"
+}
+
+@enduml
